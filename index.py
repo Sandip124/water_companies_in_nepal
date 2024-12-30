@@ -76,7 +76,7 @@ def create_company_map(csv_file_path, output_map_path):
                 border-radius: 5px;
                 box-shadow: 0 0 5px rgba(0,0,0,0.2);">
         <h3 style="margin: 0; text-align: center; color: #333;">
-            Nepal Water Companies
+            Water Companies in Nepal
         </h3>
     </div>
     '''
