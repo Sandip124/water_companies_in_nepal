@@ -42,3 +42,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./  # Adjust this if index.html is in a different directory
+        publish_branch: gh-pages
