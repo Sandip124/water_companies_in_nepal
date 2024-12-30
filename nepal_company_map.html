@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_ab8af241557abd64b2d8133c73c0118b {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+    <div style="position: fixed; 
+                top: 10px; 
+                left: 50px; 
+                width: 300px; 
+                height: 60px; 
+                z-index: 1000;
+                background-color: white; 
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0 0 5px rgba(0,0,0,0.2);">
+        <h3 style="margin: 0; text-align: center; color: #333;">
+            Nepal Water Companies
+        </h3>
+    </div>
+    
+    
+    <div id="side-panel" style="
+        position: fixed;
+        top: 80px;
+        left: 10px;
+        width: 250px;
+        max-height: 70%;
+        background-color: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        overflow-y: auto;
+        z-index: 1000;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <h4 style="margin: 0;">Companies List</h4>
+            <button onclick="togglePanel()" style="border: none; background: none; cursor: pointer;">
+                ➖
+            </button>
+        </div>
+        <div id="company-list">
+    
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Dhampus Springs Mineral Water Pvt. Ltd</strong><br>
+                    <small>Dhampus 33700, Pokhara, Kaski, Gandaki, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>H2O Water Factory</strong><br>
+                    <small>Kirtipur, Kathmandu, Bagmati, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Bagdwar Fresh Mineral Water Pvt. Ltd.</strong><br>
+                    <small>Gokarneshwor 44600, Kathmandu, Bagmati, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Sunmai Spring (Pure Drinking Water) Head Office</strong><br>
+                    <small>Birtamode 57204, Jhapa, Mechi, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Spring Mineral Water of Matatirtha Pvt. Ltd.</strong><br>
+                    <small>Bhusungkhel, Chandragiri, Kathmandu, Bagmati, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>AQUAFINE</strong><br>
+                    <small>Birendranagar, Surkhet, Karnali, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Miklajung Water</strong><br>
+                    <small>Madhumalla Miklajung-9, Morang, Koshi, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Chandan Boring</strong><br>
+                    <small>Pokhara 33700, Kaski, Gandaki, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Ma Kali Mangalgadi Pani Supplier</strong><br>
+                    <small>Latikoili Road, Birendranagar, Surkhet, Bheri, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Himalayan Water and Ice Udyog</strong><br>
+                    <small>Pokhara 33700, Kaski, Gandaki, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Kathmandu Upatyaka Khanepani Limited</strong><br>
+                    <small>Tripureshwor Chowk, Kathmandu 44600, Bagmati, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Star Water Industries Limited</strong><br>
+                    <small>Tilottama 32900, Rupandehi, Lumbini, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Bhattarai Brothers Beverage</strong><br>
+                    <small>Mechinagar, Kakarvita, Jhapa, Mechi, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Shiva Ganga Jal Udhyog</strong><br>
+                    <small>Itahari 56705, Sunsari, Koshi, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Aqua Mineral Nepal Pvt. Ltd.</strong><br>
+                    <small>Sai Baba Marg, Kathmandu 44600, Bagmati, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Nirmal Jal Udhyog</strong><br>
+                    <small>Biratnagar 56613, Morang, Koshi, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Jonson Jal Udyog</strong><br>
+                    <small>Biratnagar 56613, Morang, Koshi, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>AB Beverage Industries Pvt. Ltd.</strong><br>
+                    <small>Gokarneshwor 44600, Kathmandu, Bagmati, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Rise Drinking Water and Suppliers</strong><br>
+                    <small>Galfutar, Tokha 44600, Kathmandu, Bagmati, Nepal</small>
+                </div>
+            
+                <div style="margin-bottom: 8px; padding: 5px; border-bottom: 1px solid #eee;">
+                    <strong>Gosainkunda Drinking Water</strong><br>
+                    <small>Tokha 44600, Kathmandu, Bagmati, Nepal</small>
+                </div>
+            
+        </div>
+    </div>
+    
+    <script>
+    function togglePanel() {
+        var panel = document.getElementById('company-list');
+        var button = document.querySelector('#side-panel button');
+        if (panel.style.display === 'none') {
+            panel.style.display = 'block';
+            button.innerHTML = '➖';
+        } else {
+            panel.style.display = 'none';
+            button.innerHTML = '➕';
+        }
+    }
+    </script>
+    
+    
+            <div class="folium-map" id="map_ab8af241557abd64b2d8133c73c0118b" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_ab8af241557abd64b2d8133c73c0118b = L.map(
+                "map_ab8af241557abd64b2d8133c73c0118b",
+                {
+                    center: [28.3949, 84.124],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 7,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_bf9cce0b14054bf7102783b4ab92bbec = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_bf9cce0b14054bf7102783b4ab92bbec.addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+            var marker_9de37d6f1574b309893354fe2f60322f = L.marker(
+                [28.2373241, 83.9852911],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_2752da1a6ab754cbe308c2b2e6335091 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2c9e4d0eae2ed7cbed29f334bfb044cd = $(`<div id="html_2c9e4d0eae2ed7cbed29f334bfb044cd" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Dhampus Springs Mineral Water Pvt. Ltd</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Dhampus 33700, Pokhara, Kaski, Gandaki, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Dhampus 33700, Pokhara, Kaski, Gandaki, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_2752da1a6ab754cbe308c2b2e6335091.setContent(html_2c9e4d0eae2ed7cbed29f334bfb044cd);
+            
+        
+
+        marker_9de37d6f1574b309893354fe2f60322f.bindPopup(popup_2752da1a6ab754cbe308c2b2e6335091)
+        ;
+
+        
+    
+    
+            marker_9de37d6f1574b309893354fe2f60322f.bindTooltip(
+                `<div>
+                     Dhampus Springs Mineral Water Pvt. Ltd
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5c320948959f7acf6b1da675184661c3 = L.marker(
+                [27.676664, 85.2782438],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_7f119d4a9da6a7febb32affcaab0966f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_54674da43513f80f22fb0f5a0618d7fe = $(`<div id="html_54674da43513f80f22fb0f5a0618d7fe" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">H2O Water Factory</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Kirtipur, Kathmandu, Bagmati, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Kirtipur, Kathmandu, Bagmati, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_7f119d4a9da6a7febb32affcaab0966f.setContent(html_54674da43513f80f22fb0f5a0618d7fe);
+            
+        
+
+        marker_5c320948959f7acf6b1da675184661c3.bindPopup(popup_7f119d4a9da6a7febb32affcaab0966f)
+        ;
+
+        
+    
+    
+            marker_5c320948959f7acf6b1da675184661c3.bindTooltip(
+                `<div>
+                     H2O Water Factory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_91bf0a76cef894ff50a8176adc5643a2 = L.marker(
+                [27.7375111, 85.3857936],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_83b1ea483758f1bd769e30917401652f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_58774e91a2f6d02c84e3e4f6907933bc = $(`<div id="html_58774e91a2f6d02c84e3e4f6907933bc" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Bagdwar Fresh Mineral Water Pvt. Ltd.</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Gokarneshwor 44600, Kathmandu, Bagmati, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Gokarneshwor 44600, Kathmandu, Bagmati, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_83b1ea483758f1bd769e30917401652f.setContent(html_58774e91a2f6d02c84e3e4f6907933bc);
+            
+        
+
+        marker_91bf0a76cef894ff50a8176adc5643a2.bindPopup(popup_83b1ea483758f1bd769e30917401652f)
+        ;
+
+        
+    
+    
+            marker_91bf0a76cef894ff50a8176adc5643a2.bindTooltip(
+                `<div>
+                     Bagdwar Fresh Mineral Water Pvt. Ltd.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_26738b1cdf8a6238b0bec815f63d9f5a = L.marker(
+                [26.641508, 87.990279],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_17e2ad8836d594b6e5ccc308ee05a58d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5fe243cddc1eb581fd8659f521f61019 = $(`<div id="html_5fe243cddc1eb581fd8659f521f61019" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Sunmai Spring (Pure Drinking Water) Head Office</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Birtamode 57204, Jhapa, Mechi, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Birtamode 57204, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_17e2ad8836d594b6e5ccc308ee05a58d.setContent(html_5fe243cddc1eb581fd8659f521f61019);
+            
+        
+
+        marker_26738b1cdf8a6238b0bec815f63d9f5a.bindPopup(popup_17e2ad8836d594b6e5ccc308ee05a58d)
+        ;
+
+        
+    
+    
+            marker_26738b1cdf8a6238b0bec815f63d9f5a.bindTooltip(
+                `<div>
+                     Sunmai Spring (Pure Drinking Water) Head Office
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9e71da150e3ecbe1897c50e489ce0dfb = L.marker(
+                [28.3780464, 83.9999901],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_d8cfbcdb432a7abaebc318939422d55f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_47d77535948cf4b8a71cc9173bef51cc = $(`<div id="html_47d77535948cf4b8a71cc9173bef51cc" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Spring Mineral Water of Matatirtha Pvt. Ltd.</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Bhusungkhel, Chandragiri, Kathmandu, Bagmati, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Nepal, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_d8cfbcdb432a7abaebc318939422d55f.setContent(html_47d77535948cf4b8a71cc9173bef51cc);
+            
+        
+
+        marker_9e71da150e3ecbe1897c50e489ce0dfb.bindPopup(popup_d8cfbcdb432a7abaebc318939422d55f)
+        ;
+
+        
+    
+    
+            marker_9e71da150e3ecbe1897c50e489ce0dfb.bindTooltip(
+                `<div>
+                     Spring Mineral Water of Matatirtha Pvt. Ltd.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_4be118de2032e2c7cde250446dfebcb2 = L.marker(
+                [28.595387, 81.628494],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_2cbba1bee6cb30a1ac41c92ba2dcb953 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e411c7719af453810599be917dc4f5cd = $(`<div id="html_e411c7719af453810599be917dc4f5cd" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">AQUAFINE</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Birendranagar, Surkhet, Karnali, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Birendranagar, Surkhet, Karnali, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_2cbba1bee6cb30a1ac41c92ba2dcb953.setContent(html_e411c7719af453810599be917dc4f5cd);
+            
+        
+
+        marker_4be118de2032e2c7cde250446dfebcb2.bindPopup(popup_2cbba1bee6cb30a1ac41c92ba2dcb953)
+        ;
+
+        
+    
+    
+            marker_4be118de2032e2c7cde250446dfebcb2.bindTooltip(
+                `<div>
+                     AQUAFINE
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9745a92dc29608247195924ff274524c = L.marker(
+                [26.732666, 87.663132],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_05f93b4e126b394ef18fa06eda91d7da = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8258a86deccfb2863dcb2428ba08dfcb = $(`<div id="html_8258a86deccfb2863dcb2428ba08dfcb" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Miklajung Water</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Madhumalla Miklajung-9, Morang, Koshi, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Madhumalla Miklajung-9, Morang, Koshi, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_05f93b4e126b394ef18fa06eda91d7da.setContent(html_8258a86deccfb2863dcb2428ba08dfcb);
+            
+        
+
+        marker_9745a92dc29608247195924ff274524c.bindPopup(popup_05f93b4e126b394ef18fa06eda91d7da)
+        ;
+
+        
+    
+    
+            marker_9745a92dc29608247195924ff274524c.bindTooltip(
+                `<div>
+                     Miklajung Water
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9c7538f561853b7fd488483717b98fe3 = L.marker(
+                [28.209538, 83.991402],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_fb2bfa71be6a8924d6b93655c09622e8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_77a795d655403059b54b6c22fab34d37 = $(`<div id="html_77a795d655403059b54b6c22fab34d37" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Chandan Boring</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Pokhara 33700, Kaski, Gandaki, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Pokhara 33700, Kaski, Gandaki, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_fb2bfa71be6a8924d6b93655c09622e8.setContent(html_77a795d655403059b54b6c22fab34d37);
+            
+        
+
+        marker_9c7538f561853b7fd488483717b98fe3.bindPopup(popup_fb2bfa71be6a8924d6b93655c09622e8)
+        ;
+
+        
+    
+    
+            marker_9c7538f561853b7fd488483717b98fe3.bindTooltip(
+                `<div>
+                     Chandan Boring
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_107a9bfdcb5982138e61baf46a0e34f6 = L.marker(
+                [28.3780464, 83.9999901],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_89cd447bddf25a0fc8aa28f08c950159 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_990ad6d48e8cfbe002c893afacdc06e4 = $(`<div id="html_990ad6d48e8cfbe002c893afacdc06e4" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Ma Kali Mangalgadi Pani Supplier</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Latikoili Road, Birendranagar, Surkhet, Bheri, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Nepal, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_89cd447bddf25a0fc8aa28f08c950159.setContent(html_990ad6d48e8cfbe002c893afacdc06e4);
+            
+        
+
+        marker_107a9bfdcb5982138e61baf46a0e34f6.bindPopup(popup_89cd447bddf25a0fc8aa28f08c950159)
+        ;
+
+        
+    
+    
+            marker_107a9bfdcb5982138e61baf46a0e34f6.bindTooltip(
+                `<div>
+                     Ma Kali Mangalgadi Pani Supplier
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ba21394de88014e15e9fe420f6b90764 = L.marker(
+                [28.209538, 83.991402],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_eeb63b5d9d8cbbf35416dbba76db428f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_caee2ce64290341789081708f0a23cdb = $(`<div id="html_caee2ce64290341789081708f0a23cdb" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Himalayan Water and Ice Udyog</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Pokhara 33700, Kaski, Gandaki, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Pokhara 33700, Kaski, Gandaki, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_eeb63b5d9d8cbbf35416dbba76db428f.setContent(html_caee2ce64290341789081708f0a23cdb);
+            
+        
+
+        marker_ba21394de88014e15e9fe420f6b90764.bindPopup(popup_eeb63b5d9d8cbbf35416dbba76db428f)
+        ;
+
+        
+    
+    
+            marker_ba21394de88014e15e9fe420f6b90764.bindTooltip(
+                `<div>
+                     Himalayan Water and Ice Udyog
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_23101c738735f1c66344956639795471 = L.marker(
+                [27.6937845, 85.31411107407683],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_3d27d2545dd0e3cb7ee6c861d9850bad = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6aa5aa77e9ae5ee577ecd30e07e8c42a = $(`<div id="html_6aa5aa77e9ae5ee577ecd30e07e8c42a" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Kathmandu Upatyaka Khanepani Limited</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Tripureshwor Chowk, Kathmandu 44600, Bagmati, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Tripureshwor Chowk, Kathmandu 44600, Bagmati, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_3d27d2545dd0e3cb7ee6c861d9850bad.setContent(html_6aa5aa77e9ae5ee577ecd30e07e8c42a);
+            
+        
+
+        marker_23101c738735f1c66344956639795471.bindPopup(popup_3d27d2545dd0e3cb7ee6c861d9850bad)
+        ;
+
+        
+    
+    
+            marker_23101c738735f1c66344956639795471.bindTooltip(
+                `<div>
+                     Kathmandu Upatyaka Khanepani Limited
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_cb86d75668d395c39a66645247c8f6fa = L.marker(
+                [27.6116429, 83.48996975188996],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_d60c9d12093142b05fa82c85e1954b49 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b0d14dbb4183f187467ead12c29b0092 = $(`<div id="html_b0d14dbb4183f187467ead12c29b0092" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Star Water Industries Limited</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Tilottama 32900, Rupandehi, Lumbini, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Tilottama 32900, Rupandehi, Lumbini, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_d60c9d12093142b05fa82c85e1954b49.setContent(html_b0d14dbb4183f187467ead12c29b0092);
+            
+        
+
+        marker_cb86d75668d395c39a66645247c8f6fa.bindPopup(popup_d60c9d12093142b05fa82c85e1954b49)
+        ;
+
+        
+    
+    
+            marker_cb86d75668d395c39a66645247c8f6fa.bindTooltip(
+                `<div>
+                     Star Water Industries Limited
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_539163888ccd83a550156164310f2e06 = L.marker(
+                [26.681506, 88.07744824866145],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_f6568fb5f970aa125b05a2303e22ed17 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5dc64c70827d555e63d38457f91bfbc7 = $(`<div id="html_5dc64c70827d555e63d38457f91bfbc7" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Bhattarai Brothers Beverage</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Mechinagar, Kakarvita, Jhapa, Mechi, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Mechinagar, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_f6568fb5f970aa125b05a2303e22ed17.setContent(html_5dc64c70827d555e63d38457f91bfbc7);
+            
+        
+
+        marker_539163888ccd83a550156164310f2e06.bindPopup(popup_f6568fb5f970aa125b05a2303e22ed17)
+        ;
+
+        
+    
+    
+            marker_539163888ccd83a550156164310f2e06.bindTooltip(
+                `<div>
+                     Bhattarai Brothers Beverage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5af4f756c672f88185f6f9ca1cbd322b = L.marker(
+                [26.6622505, 87.2748964],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_dbb88d21c4d4984abb312ed805708928 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_63190a9ef7288052c97214b94bba7fa4 = $(`<div id="html_63190a9ef7288052c97214b94bba7fa4" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Shiva Ganga Jal Udhyog</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Itahari 56705, Sunsari, Koshi, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Itahari 56705, Sunsari, Koshi, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_dbb88d21c4d4984abb312ed805708928.setContent(html_63190a9ef7288052c97214b94bba7fa4);
+            
+        
+
+        marker_5af4f756c672f88185f6f9ca1cbd322b.bindPopup(popup_dbb88d21c4d4984abb312ed805708928)
+        ;
+
+        
+    
+    
+            marker_5af4f756c672f88185f6f9ca1cbd322b.bindTooltip(
+                `<div>
+                     Shiva Ganga Jal Udhyog
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_4dda4ca7bee9424e301c7b510a585249 = L.marker(
+                [27.695362274437024, 85.34492461339198],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_427be09af6399a5072489cfba649af1d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_76c7e622f498630ce0a57891f250ce2b = $(`<div id="html_76c7e622f498630ce0a57891f250ce2b" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Aqua Mineral Nepal Pvt. Ltd.</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Sai Baba Marg, Kathmandu 44600, Bagmati, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Sai Baba Marg, Kathmandu 44600, Bagmati, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_427be09af6399a5072489cfba649af1d.setContent(html_76c7e622f498630ce0a57891f250ce2b);
+            
+        
+
+        marker_4dda4ca7bee9424e301c7b510a585249.bindPopup(popup_427be09af6399a5072489cfba649af1d)
+        ;
+
+        
+    
+    
+            marker_4dda4ca7bee9424e301c7b510a585249.bindTooltip(
+                `<div>
+                     Aqua Mineral Nepal Pvt. Ltd.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0b1c234ea47463758233c2a98b17f89c = L.marker(
+                [26.4623007, 87.281617],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_91948ac1af930a3447870acd56f79d11 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b6977f8470039db3680de57a2fce0da5 = $(`<div id="html_b6977f8470039db3680de57a2fce0da5" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Nirmal Jal Udhyog</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Biratnagar 56613, Morang, Koshi, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Biratnagar 56613, Morang, Koshi, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_91948ac1af930a3447870acd56f79d11.setContent(html_b6977f8470039db3680de57a2fce0da5);
+            
+        
+
+        marker_0b1c234ea47463758233c2a98b17f89c.bindPopup(popup_91948ac1af930a3447870acd56f79d11)
+        ;
+
+        
+    
+    
+            marker_0b1c234ea47463758233c2a98b17f89c.bindTooltip(
+                `<div>
+                     Nirmal Jal Udhyog
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_21fd4a7fbcef6f70e334a2d45be98742 = L.marker(
+                [26.4623007, 87.281617],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_576d9a7f1c580bce37a6cd4c86e999c9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_02cec30588a67900d1800068933547d4 = $(`<div id="html_02cec30588a67900d1800068933547d4" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Jonson Jal Udyog</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Biratnagar 56613, Morang, Koshi, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Biratnagar 56613, Morang, Koshi, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_576d9a7f1c580bce37a6cd4c86e999c9.setContent(html_02cec30588a67900d1800068933547d4);
+            
+        
+
+        marker_21fd4a7fbcef6f70e334a2d45be98742.bindPopup(popup_576d9a7f1c580bce37a6cd4c86e999c9)
+        ;
+
+        
+    
+    
+            marker_21fd4a7fbcef6f70e334a2d45be98742.bindTooltip(
+                `<div>
+                     Jonson Jal Udyog
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_5d6779bdac450265e88ac9ae12f40392 = L.marker(
+                [27.7375111, 85.3857936],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_06199ea0b21e03ee75cfdc1826dfbae3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fb5f8eccd8c1f7eb0b89b5f8b0cc8979 = $(`<div id="html_fb5f8eccd8c1f7eb0b89b5f8b0cc8979" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">AB Beverage Industries Pvt. Ltd.</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Gokarneshwor 44600, Kathmandu, Bagmati, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Gokarneshwor 44600, Kathmandu, Bagmati, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_06199ea0b21e03ee75cfdc1826dfbae3.setContent(html_fb5f8eccd8c1f7eb0b89b5f8b0cc8979);
+            
+        
+
+        marker_5d6779bdac450265e88ac9ae12f40392.bindPopup(popup_06199ea0b21e03ee75cfdc1826dfbae3)
+        ;
+
+        
+    
+    
+            marker_5d6779bdac450265e88ac9ae12f40392.bindTooltip(
+                `<div>
+                     AB Beverage Industries Pvt. Ltd.
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_1882d65e24f4dea9acbae6add1fb0347 = L.marker(
+                [28.3780464, 83.9999901],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_47afabe0edf038cce340f683aef24314 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e3803c10ff16b4d5257a27388d74658d = $(`<div id="html_e3803c10ff16b4d5257a27388d74658d" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Rise Drinking Water and Suppliers</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Galfutar, Tokha 44600, Kathmandu, Bagmati, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Nepal, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_47afabe0edf038cce340f683aef24314.setContent(html_e3803c10ff16b4d5257a27388d74658d);
+            
+        
+
+        marker_1882d65e24f4dea9acbae6add1fb0347.bindPopup(popup_47afabe0edf038cce340f683aef24314)
+        ;
+
+        
+    
+    
+            marker_1882d65e24f4dea9acbae6add1fb0347.bindTooltip(
+                `<div>
+                     Rise Drinking Water and Suppliers
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6d4f6a8aab5a99f464a4bd456ffa9ece = L.marker(
+                [27.75, 85.333333],
+                {
+}
+            ).addTo(map_ab8af241557abd64b2d8133c73c0118b);
+        
+    
+        var popup_efd48553f4b263ab95f94245e4579ed3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f4056303e80b5f9333e38fdbb47fa1de = $(`<div id="html_f4056303e80b5f9333e38fdbb47fa1de" style="width: 100.0%; height: 100.0%;">                 <div style="min-width: 200px;">                     <h4 style="margin: 4px 0;">Gosainkunda Drinking Water</h4>                     <p style="margin: 4px 0;"><b>Location:</b> Tokha 44600, Kathmandu, Bagmati, Nepal</p>                     <p style="margin: 4px 0; font-size: 0.8em; color: #666;">                         <b>Found using:</b> Tokha 44600, Kathmandu, Bagmati, Nepal                     </p>                 </div>             </div>`)[0];
+                popup_efd48553f4b263ab95f94245e4579ed3.setContent(html_f4056303e80b5f9333e38fdbb47fa1de);
+            
+        
+
+        marker_6d4f6a8aab5a99f464a4bd456ffa9ece.bindPopup(popup_efd48553f4b263ab95f94245e4579ed3)
+        ;
+
+        
+    
+    
+            marker_6d4f6a8aab5a99f464a4bd456ffa9ece.bindTooltip(
+                `<div>
+                     Gosainkunda Drinking Water
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>
