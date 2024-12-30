@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Generate index.html and create PR
 
 on:
   push:
@@ -32,3 +32,27 @@ jobs:
     - name: Run index.py to generate index.html
       run: |
         python index.py
+
+    - name: Commit changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add index.html
+        git commit -m 'Update index.html'
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'Update index.html'
+        branch: update-index-html
+        title: 'Update index.html'
+        body: 'This PR updates the index.html file.'
+        labels: 'auto-merge'
+
+    - name: Auto-merge Pull Request
+      uses: pascalgn/automerge-action@v0.14.3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        merge_method: squash
+        branch: main
