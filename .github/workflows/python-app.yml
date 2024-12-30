@@ -51,8 +51,22 @@ jobs:
         labels: 'auto-merge'
 
     - name: Auto-merge Pull Request
-      uses: pascalgn/automerge-action@v0.14.3
+      uses: actions/github-script@v6
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        merge_method: squash
-        branch: main
+        script: |
+          const { data: pullRequests } = await github.pulls.list({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'open',
+            head: 'update-index-html'
+          });
+
+          if (pullRequests.length > 0) {
+            const pullRequest = pullRequests[0];
+            await github.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pullRequest.number,
+              merge_method: 'squash'
+            });
+          }
