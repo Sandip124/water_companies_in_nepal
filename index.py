@@ -88,7 +88,7 @@ def create_company_map(csv_file_path, output_map_path):
         position: fixed;
         top: 80px;
         left: 10px;
-        width: 250px;
+        width: 340px;
         max-height: 70%;
         background-color: white;
         padding: 10px;
