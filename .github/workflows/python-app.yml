@@ -3,18 +3,22 @@ name: Generate index.html and create PR
 on:
   push:
     branches:
-      - main  # Adjust this if your default branch is different
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: "3.10"
 
@@ -33,40 +37,20 @@ jobs:
       run: |
         python index.py
 
-    - name: Commit changes
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add index.html
-        git commit -m 'Update index.html'
-
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v5
+      id: cpr
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         commit-message: 'Update index.html'
         branch: update-index-html
         title: 'Update index.html'
         body: 'This PR updates the index.html file.'
-        labels: 'auto-merge'
+        labels: auto-merge
 
-    - name: Auto-merge Pull Request
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const { data: pullRequests } = await github.pulls.list({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            state: 'open',
-            head: 'update-index-html'
-          });
-
-          if (pullRequests.length > 0) {
-            const pullRequest = pullRequests[0];
-            await github.pulls.merge({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pullRequest.number,
-              merge_method: 'squash'
-            });
-          }
+    - name: Enable auto-merge
+      if: steps.cpr.outputs.pull-request-number
+      run: |
+        gh pr merge --auto --merge --delete-branch "${{ steps.cpr.outputs.pull-request-number }}"
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
